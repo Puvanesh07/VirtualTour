@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+        }
+
+        #panorama {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #panorama-controls {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        #custom-controls {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+        }
+
+        .ctrl {
+            padding: 8px 5px;
+            width: 30px;
+            text-align: center;
+            background: rgba(200, 200, 200, 0.8);
+            display: inline-block;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .ctrl:hover {
+            background: rgba(150, 150, 150, 0.8);
+        }
+        </style>
+</head>
+
+<body>
+    
+    <div id="panorama">
+        <div id="panorama-controls">
+            <div class="ctrl" id="pan-up">&#9650;</div>
+            <div class="ctrl" id="pan-down">&#9660;</div>
+            <div class="ctrl" id="pan-left">&#9664;</div>
+            <div class="ctrl" id="pan-right">&#9654;</div>
+            <div class="ctrl" id="zoom-in">&plus;</div>
+            <div class="ctrl" id="zoom-out">&minus;</div>
+            <div class="ctrl" id="fullscreen">&#x2922;</div>
+        </div>
+        <div id="custom-controls">
+            <!-- Add custom buttons for each scene -->
+            <div class="ctrl" onclick="loadScene('image1')">1</div>
+            <div class="ctrl" onclick="loadScene('image2')">2</div>
+            <div class="ctrl" onclick="loadScene('image3')">3</div>
+            <div class="ctrl" onclick="loadScene('image4')">4</div>
+            <div class="ctrl" onclick="loadScene('image5')">5</div>
+            <div class="ctrl" onclick="loadScene('image6')">6</div>
+            <div class="ctrl" onclick="loadScene('image7')">7</div>
+            <div class="ctrl" onclick="loadScene('image8')">8</div>
+            <div class="ctrl" onclick="loadScene('image9')">9</div>
+            <div class="ctrl" onclick="loadScene('image10')">10</div>
+        </div>
+    </div>>
+    <script>
+        const scenes = {
+            "image1": {
+                "title": "Image 1",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 0,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/alma.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image2",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image2": {
+                "title": "Image 2",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/cerro-toco-0.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image3",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    },
+                    {
+                        "pitch": 14.1,
+                        "yaw": 1.5,
+                        "type": "info",
+                        "text": "Baltimore Museum of Art",
+                        "URL": "https://artbma.org/"
+                    },
+                    {
+                        "pitch": -9.4,
+                        "yaw": 222.6,
+                        "type": "info",
+                        "text": "Art Museum Drive"
+                    },
+                    {
+                        "pitch": -0.9,
+                        "yaw": 144.4,
+                        "type": "info",
+                        "text": "North Charles Street"
+                    }
+                ]
+            },
+            "image3": {
+                "title": "Image 3",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/jfk.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image4",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image4": {
+                "title": "Image 4",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://i.imgur.com/G7t9QD9.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image5",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image5": {
+                "title": "Image 5",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/tocopilla.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image6",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image6": {
+                "title": "Image 6",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/alma-correlator-facility.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image7",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image7": {
+                "title": "Image 7",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/charles-street.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image8",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image8": {
+                "title": "Image 8",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://pannellum.org/images/lascar.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image9",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image9": {
+                "title": "Image 9",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "https://puvanesh07.github.io/Interaktive_Files/aerial-drone-panorama-view-village-located-near-river-hills-fields-godrays-clouds-moldova.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image10",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            },
+            "image10": {
+                "title": "Image 10",
+                "hfov": 110,
+                "pitch": 0,
+                "yaw": 180,
+                "type": "equirectangular",
+                "panorama": "image10.jpg",
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 45,
+                        "type": "scene",
+                        "text": "Next Image",
+                        "sceneId": "image1",
+                        "targetYaw": 180,
+                        "targetPitch": 0
+                    }
+                ]
+            }
+        };
+
+        
+
+
+            const viewer = pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "image1",
+                "author": "Puvanesh",
+                "autoLoad": true,
+                "showControls": false,
+                "sceneFadeDuration": 1000
+            },
+            "scenes": scenes
+        });
+
+        // Make buttons work
+        document.getElementById('pan-up').addEventListener('click', function(e) {
+            viewer.setPitch(viewer.getPitch() + 10);
+        });
+        document.getElementById('pan-down').addEventListener('click', function(e) {
+            viewer.setPitch(viewer.getPitch() - 10);
+        });
+        document.getElementById('pan-left').addEventListener('click', function(e) {
+            viewer.setYaw(viewer.getYaw() - 10);
+        });
+        document.getElementById('pan-right').addEventListener('click', function(e) {
+            viewer.setYaw(viewer.getYaw() + 10);
+        });
+        document.getElementById('zoom-in').addEventListener('click', function(e) {
+            viewer.setHfov(viewer.getHfov() - 10);
+        });
+        document.getElementById('zoom-out').addEventListener('click', function(e) {
+            viewer.setHfov(viewer.getHfov() + 10);
+        });
+        document.getElementById('fullscreen').addEventListener('click', function(e) {
+            viewer.toggleFullscreen();
+        });
+
+        function loadScene(sceneId) {
+            viewer.loadScene(sceneId);
+        }
+
+            
+
+
+
+
+
+
+</script>
+</body>
+</html>
